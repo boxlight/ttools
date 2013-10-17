@@ -24,3 +24,13 @@ Add this to your composer.json:
 }
 
 </pre>
+
+Then Add 
+
+<pre>
+$app->register(new TTools\Provider\Silex\TToolsServiceProvider(), array(
+    'ttools.consumer_key'       => 'CONSUMER_KEY',
+    'ttools.consumer_secret'    => 'CONSUMER_SECRET',
+    'ttools.auth_method'        =>'/oauth/authorize'
+));
+</pre>
