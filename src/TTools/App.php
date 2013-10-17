@@ -3,52 +3,31 @@
 namespace TTools;
 
 use TTools\TTools;
-use TTools\Provider\StorageProvider;
-use TTools\Provider\StorageSession;
-use TTools\Provider\RequestProvider;
+use TTools\Exception\TToolsApiException;
 
 class App {
 
-    private $storage;
-    private $request;
     private $ttools;
-    private $current_user;
 
-    public function __construct(array $config, StorageProvider $sp = null, RequestProvider $rp = null)
+    public function __construct(array $config)
     {
-        $this->storage = $sp ?: new StorageSession();
-        $this->request = $rp ?: new RequestProvider();
-
-        if (!isset($config['access_token'])) {
-            /* check if theres a logged user in session */
-            $user = $this->storage->getLoggedUser();
-            if (!empty($user['access_token'])) {
-                $config['access_token']        = $user['access_token'];
-                $config['access_token_secret'] = $user['access_token_secret'];
-            }
-        }
-
         $this->ttools = new TTools($config);
-
-        $this->current_user = $this->getUser();
     }
 
-    public function isLogged()
+    public function initClient($token, $token_secret)
     {
-        return count($this->current_user);
+        $this->ttools->setUserTokens($token, $token_secret);
     }
 
     public function getLoginUrl()
     {
-        $result = $this->ttools->getAuthorizeUrl();
-        $this->storage->storeRequestSecret($result['token'], $result['secret']);
-       
-        return $result['auth_url'];
+        $resultArray = $this->ttools->getAuthorizeUrl();
+        return $resultArray;
     }
 
-    public function getCurrentUser()
+    public function getTokenAndSecret($request_token, $request_secret, $oauth_verifier)
     {
-        return $this->current_user;
+        return $this->ttools->getAccessToken($request_token, $request_secret, $oauth_verifier);
     }
 
     public function getLastReqInfo()
@@ -56,37 +35,22 @@ class App {
         return $this->ttools->getLastReqInfo();
     }
 
-    public function getUser()
-    {
-        $user = array();
-        if ($this->ttools->getState()) {
-            $user = $this->getCredentials();
-        } else {
-            $oauth_verifier = $this->request->get('oauth_verifier');
-            if ($oauth_verifier !== null) {
-
-                $secret = $this->storage->getRequestSecret();
-                $oauth_token = $this->request->get('oauth_token');
-                $tokens = $this->ttools->getAccessTokens($oauth_token, $secret, $oauth_verifier);
-
-                if (!empty($tokens['access_token'])) {
-                    $this->storage->storeLoggedUser($tokens);
-                    $user = $this->getCredentials();
-                }
-            }
-        }
-
-        return $user;
-    }
-
     public function get($path, $params = array(), $config = array())
     {
-        return $this->ttools->makeRequest('/' . TTools::API_VERSION . $path, $params, 'GET', $config);
+        $ret = $this->ttools->makeRequest('/' . TTools::API_VERSION . $path, $params, 'GET', $config);
+        if (isset($ret['error']))
+            throw new TToolsApiException($ret);
+        else
+            return $ret;
     }
 
     public function post($path, $params, $multipart = false, $config = array())
     {
-        return $this->ttools->makeRequest('/' . TTools::API_VERSION . $path, $params, 'POST', $multipart, $config);
+        $ret = $this->ttools->makeRequest('/' . TTools::API_VERSION . $path, $params, 'POST', $multipart, $config);
+        if (isset($ret['error']))
+            throw new TToolsApiException($ret);
+        else
+            return $ret;
     }
 
     public function getCredentials()
@@ -154,8 +118,4 @@ class App {
         ), true);
     }
 
-    public function logout()
-    {
-        return $this->storage->logout();
-    }
 }
