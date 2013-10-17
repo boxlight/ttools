@@ -18,7 +18,7 @@ Add this to your composer.json:
     	{ "type": "vcs", "url": "git@github.com:boxlight/ttools.git" }
     ],
     "require": {
-            "boxlight/twitter-service-provider/ttools": "dev-master",
+            "boxlight/ttools": "dev-master",
         "tmhoauth/tmhoauth": "dev-ttools"
     }
 }
