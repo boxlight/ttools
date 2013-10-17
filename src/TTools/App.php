@@ -27,7 +27,7 @@ class App {
 
     public function getTokenAndSecret($request_token, $request_secret, $oauth_verifier)
     {
-        return $this->ttools->getAccessToken($request_token, $request_secret, $oauth_verifier);
+        return $this->ttools->getAccessTokens($request_token, $request_secret, $oauth_verifier);
     }
 
     public function getLastReqInfo()
