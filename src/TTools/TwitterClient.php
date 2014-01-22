@@ -1,9 +1,9 @@
 <?php
 
-namespace TTools;
+namespace Boxlight\TTools;
 
-use TTools\TTools;
-use TTools\Exception\TToolsApiException;
+use Boxlight\TTools\TTools;
+use Boxlight\TTools\Exception\TToolsApiException;
 
 class TwitterClient {
 

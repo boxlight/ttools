@@ -1,6 +1,6 @@
 <?php
 
-namespace TTools\Exception;
+namespace Boxlight\TTools\Exception;
 
 /**
  * Thrown when an API call returns an exception.
@@ -20,7 +20,7 @@ class TToolsApiException extends \Exception
 	*
 	* @param array $result The result from the API server
 	*/
-	public function __construct($result) 
+	public function __construct($result)
 	{
 		$this->result = $result;
 
@@ -40,7 +40,7 @@ class TToolsApiException extends \Exception
 	*
 	* @return array The result from the API server
 	*/
-	public function getResult() 
+	public function getResult()
 	{
 		return $this->result;
 	}
@@ -51,7 +51,7 @@ class TToolsApiException extends \Exception
 	*
 	* @return string
 	*/
-	public function getType() 
+	public function getType()
 	{
 		if (isset($this->result['error'])) {
 			$error = $this->result['error'];
@@ -72,7 +72,7 @@ class TToolsApiException extends \Exception
 	*
 	* @return string The string representation of the error
 	*/
-	public function __toString() 
+	public function __toString()
 	{
 		$str = $this->getType() . ': ';
 		if ($this->code != 0) {

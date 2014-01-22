@@ -1,8 +1,8 @@
 <?php
 
-namespace TTools;
+namespace Boxlight\TTools;
 
-use TTools\TwitterClient;
+use Boxlight\TTools\TwitterClient;
 
 class TTools
 {

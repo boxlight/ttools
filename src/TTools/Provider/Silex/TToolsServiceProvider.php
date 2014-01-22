@@ -1,8 +1,8 @@
 <?php
 
-namespace TTools\Provider\Silex;
+namespace Boxlight\TTools\Provider\Silex;
 
-use TTools\TTools;
+use Boxlight\TTools\TTools;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
