@@ -5,29 +5,13 @@ namespace TTools;
 use TTools\TTools;
 use TTools\Exception\TToolsApiException;
 
-class App {
+class TwitterClient {
 
     private $ttools;
 
     public function __construct(array $config)
     {
         $this->ttools = new TTools($config);
-    }
-
-    public function initClient($token, $token_secret)
-    {
-        $this->ttools->setUserTokens($token, $token_secret);
-    }
-
-    public function getLoginUrl()
-    {
-        $resultArray = $this->ttools->getAuthorizeUrl();
-        return $resultArray;
-    }
-
-    public function getTokenAndSecret($request_token, $request_secret, $oauth_verifier)
-    {
-        return $this->ttools->getAccessTokens($request_token, $request_secret, $oauth_verifier);
     }
 
     public function getLastReqInfo()
@@ -69,7 +53,7 @@ class App {
     {
         return $this->get('/statuses/home_timeline.json',array("count"=>$limit));
     }
-    
+
     public function getUserTimeline($user_id = null, $screen_name = null, $limit = 10)
     {
         return $this->get(
@@ -81,16 +65,16 @@ class App {
             )
         );
     }
-    
+
     public function getMentions($limit = 10)
     {
         return $this->get('/statuses/mentions_timeline.json',array("count"=>$limit));
     }
-    
+
     public function getFavorites($limit = 10)
     {
         return $this->get('/favorites/list.json',array("count"=>$limit));
-    }  
+    }
 
     public function getTweet($tweet_id)
     {

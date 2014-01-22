@@ -2,7 +2,7 @@
 
 namespace TTools\Provider\Silex;
 
-use TTools\App;
+use TTools\TTools;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
@@ -13,14 +13,12 @@ class TToolsServiceProvider implements ServiceProviderInterface{
         $app['ttools'] = $app->share(function ($app) {
 
            $config = array(
-               'consumer_key'        => $app['ttools.consumer_key'],
-               'consumer_secret'     => $app['ttools.consumer_secret'],
-               'access_token'        => isset($app['ttools.access_token']) ? $app['ttools.access_token'] : null,
-               'access_token_secret' => isset($app['ttools.access_token_secret']) ? $app['ttools.access_token_secret'] : null,
-               'auth_method'         => isset($app['ttools.auth_method']) ? $app['ttools.auth_method'] : null,
-           ); 
+               'consumer_key'     => $app['ttools.consumer_key'],
+               'consumer_secret'  => $app['ttools.consumer_secret'],
+               'auth_method'      => isset($app['ttools.auth_method']) ? $app['ttools.auth_method'] : null,
+           );
 
-           return new App($config);
+           return new TTools($config);
         });
 
     }
