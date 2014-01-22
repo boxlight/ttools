@@ -15,6 +15,6 @@
         }
     ],
     "autoload": {
-        "psr-0": { "TTools": "src/" }
+        "psr-0": { "Boxlight\\TTools": "src/" }
     }
 }
