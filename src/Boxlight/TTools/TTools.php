@@ -50,7 +50,7 @@ class TTools
             'consumer_secret'     => $this->consumer_secret,
             'access_token'        => $token,
             'access_token_secret' => $tokenSecret
-        )
+        );
         return new TwitterClient($config);
     }
 
