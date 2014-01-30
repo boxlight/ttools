@@ -103,17 +103,12 @@ class TwitterClient {
     }
 
     public function getInfos($user_id = null, $screen_name = null) {
-        $response =  $this->get(
+        return $this->get(
             '/users/show.json',
             array(
                 "user_id"     => $user_id,
                 "screen_name" => $screen_name,
             )
-        );
-
-        return array(
-            'profile_pic' => $response['profile_image_url'],
-            'followers'   => $response['followers_count']
         );
     }
 
