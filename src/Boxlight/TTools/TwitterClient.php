@@ -66,6 +66,20 @@ class TwitterClient {
         );
     }
 
+    public function getUserLastPostsSince($since_id, $user_id = null, $trim_user = true, $exclude_replies = true, $include_rts = false)
+    {
+        return $this->get(
+            '/statuses/user_timeline.json',
+            array(
+                "user_id"   => $user_id,
+                "since_id"  => $since_id,
+                "trim_user" => $trim_user,
+                "exclude_replies" => $exclude_replies,
+                "include_rts" => $include_rts
+            )
+        );
+    }
+
     public function getMentions($limit = 10)
     {
         return $this->get('/statuses/mentions_timeline.json',array("count"=>$limit));
