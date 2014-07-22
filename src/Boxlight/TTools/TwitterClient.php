@@ -111,7 +111,7 @@ class TwitterClient {
         $message = strip_tags($message);
 
         return $this->post('/statuses/update_with_media.json', array(
-            'status'  => $message,
+            'status'  => ' '.$message,
             'media[]' => '@' . $image . ';type=' . $meta['mime'],
             'in_reply_to_status_id' => $in_reply_to
         ), true);
