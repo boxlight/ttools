@@ -131,7 +131,7 @@ class TTools
         return $r;
     }
 
-    private function OAuthRequest($url, $params = array(), $method = 'GET', $callback = null, $multipart = false, $overwrite_config = array())
+    private function OAuthRequest($url, $params = array(), $method = 'GET', $callback = null, $multipart = false, $overwrite_config = array(), $headers = array())
     {
         $config = array_merge(
             array(
@@ -145,7 +145,7 @@ class TTools
 
         $oauth = new \tmhOAuth\tmhOAuth($config);
 
-        $req = $oauth->request($method, $oauth->url($url,''), $params, true, $multipart);
+        $req = $oauth->request($method, $oauth->url($url,''), $params, true, $multipart, $headers);
 
         if (!$req)
             return array('code' => "666");

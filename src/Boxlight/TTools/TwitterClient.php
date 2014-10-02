@@ -28,7 +28,7 @@ class TwitterClient {
             return $ret;
     }
 
-    public function post($path, $params, $multipart = false, $config = array())
+    public function post($path, $params, $multipart = false, $config = array(), $headers = array())
     {
         $ret = $this->ttools->makeRequest('/' . TTools::API_VERSION . $path, $params, 'POST', $multipart, $config);
         if (isset($ret['error']))
@@ -105,7 +105,7 @@ class TwitterClient {
         ));
     }
 
-    public function updateWithMedia($image, $message, $in_reply_to = null)
+    public function updateWithMedia($image, $message, $in_reply_to = null, $config = array(), $headers = array())
     {
         $meta = getimagesize($image);
         $message = strip_tags($message);
@@ -114,7 +114,7 @@ class TwitterClient {
             'status'  => ' '.$message,
             'media[]' => '@' . $image . ';type=' . $meta['mime'],
             'in_reply_to_status_id' => $in_reply_to
-        ), true);
+        ), true, $config, $headers);
     }
 
     public function getInfos($user_id = null, $screen_name = null) {
