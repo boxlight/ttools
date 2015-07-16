@@ -29,7 +29,7 @@ class TToolsApiException extends \Exception
 		if (isset($result['error_message'])) {
 			$msg = $result['error_message'];
 		} else {
-		  	$msg = 'Unknown Error. Check getResult()';
+		  	$msg = 'Unknown Error. ' . json_encode($result);
 		}
 
 		parent::__construct($msg, $code);
