@@ -127,4 +127,11 @@ class TwitterClient {
         );
     }
 
+    public function createFriendship($user_id)
+    {
+        return $this->post('/friendships/create.json', array(
+            'user_id' => $user_id
+        ));
+    }
+
 }
